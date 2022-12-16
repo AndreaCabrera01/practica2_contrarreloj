@@ -47,8 +47,7 @@ int camion5Paquetes = 0;
 HX711 scale;
 
 void setup() {
-  //Serial.begin(9600);
-  lcd.begin(16, 4);                      // initialize the lcd
+  lcd.begin(16, 4);                      
   lcd.backlight();
   pinMode(BIT1, OUTPUT);
   pinMode(BIT2, OUTPUT);
@@ -65,65 +64,11 @@ void setup() {
     digitalWrite(i, HIGH);
   }
 
-  /*scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
-
-    Serial.println("Before setting up the scale:");
-    Serial.print("read: \t\t");
-    Serial.println(scale.read());      // print a raw reading from the ADC
-
-    Serial.print("read average: \t\t");
-    Serial.println(scale.read_average(20));   // print the average of 20 readings from the ADC
-
-    Serial.print("get value: \t\t");
-    Serial.println(scale.get_value(5));   // print the average of 5 readings from the ADC minus the tare weight (not set yet)
-
-    Serial.print("get units: \t\t");
-    Serial.println(scale.get_units(5), 1);  // print the average of 5 readings from the ADC minus tare weight (not set) divided
-    // by the SCALE parameter (not set yet)
-
-    scale.set_scale(36.059);
-    //scale.set_scale(-471.497);                      // this value is obtained by calibrating the scale with known weights; see the README for details
-    scale.tare();               // reset the scale to 0
-
-    Serial.println("After setting up the scale:");
-
-    Serial.print("read: \t\t");
-    Serial.println(scale.read());                 // print a raw reading from the ADC
-
-    Serial.print("read average: \t\t");
-    Serial.println(scale.read_average(20));       // print the average of 20 readings from the ADC
-
-    Serial.print("get value: \t\t");
-    Serial.println(scale.get_value(5));   // print the average of 5 readings from the ADC minus the tare weight, set with tare()
-
-    Serial.print("get units: \t\t");
-    Serial.println(scale.get_units(5), 1);        // print the average of 5 readings from the ADC minus tare weight, divided
-    // by the SCALE parameter set with set_scale
-
-    Serial.println("Readings:");*/
 }
 
 void loop() {
   //LCD:
-  //peso = 201;
-  if (peso > 200) {
-    camion++;
-    peso = 0;
-    imprimirLed();
-  }
-
-
-  /*if (camion > 5) camion = 0;
-    imprimirLed();
-    delay(500);
-
-
-    Serial.print("Weight in KG:\t");
-    Serial.print(scale.get_units() / 1000, 1);
-    Serial.print("\t| average:\t");
-    Serial.println(scale.get_units(10), 5);
-
-    delay(5000);*/
+  lcd.clear();
 
   //DEMUX:
   if (digitalRead(25) == HIGH) {
@@ -150,6 +95,7 @@ void loop() {
   }
 
   if (caja == caja1) {
+    lcd.clear();
     digitalWrite(BIT1, HIGH);
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, LOW);
@@ -158,8 +104,19 @@ void loop() {
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, LOW);
     caja = "";
+    lcd.setCursor(0, 0);
+    lcd.print("Paquetes: ");
+    lcd.setCursor(9, 0);
+    lcd.print(camion1Paquetes);
+    lcd.setCursor(0, 1);
+    lcd.print("Camion");
+    lcd.setCursor(9, 1);
+    lcd.print(1);
+    delay(1000);
+    lcd.clear();
 
   } else if (caja == caja2) {
+    lcd.clear();
     digitalWrite(BIT1, LOW);
     digitalWrite(BIT2, HIGH);
     digitalWrite(BIT3, LOW);
@@ -168,7 +125,19 @@ void loop() {
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, LOW);
     caja = "";
+    lcd.setCursor(0, 0);
+    lcd.print("Paquetes: ");
+    lcd.setCursor(9, 0);
+    lcd.print(camion2Paquetes);
+    lcd.setCursor(0, 1);
+    lcd.print("Camion");
+    lcd.setCursor(9, 1);
+    lcd.print(2);
+    delay(1000);
+    lcd.clear();
+    
   } else if (caja == caja3) {
+    lcd.clear();
     digitalWrite(BIT1, HIGH);
     digitalWrite(BIT2, HIGH);
     digitalWrite(BIT3, LOW);
@@ -177,7 +146,19 @@ void loop() {
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, LOW);
     caja = "";
+    lcd.setCursor(0, 0);
+    lcd.print("Paquetes: ");
+    lcd.setCursor(9, 0);
+    lcd.print(camion3Paquetes);
+    lcd.setCursor(0, 1);
+    lcd.print("Camion");
+    lcd.setCursor(9, 1);
+    lcd.print(3);
+    delay(1000);
+    lcd.clear();
+    
   } else if (caja == caja4) {
+    lcd.clear();
     digitalWrite(BIT1, LOW);
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, HIGH);
@@ -186,7 +167,18 @@ void loop() {
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, LOW);
     caja = "";
+    lcd.setCursor(0, 0);
+    lcd.print("Paquetes: ");
+    lcd.setCursor(9, 0);
+    lcd.print(camion4Paquetes);
+    lcd.setCursor(0, 1);
+    lcd.print("Camion");
+    lcd.setCursor(9, 1);
+    lcd.print(4);
+    delay(1000);
+    lcd.clear();
   } else if (caja == caja5) {
+    lcd.clear();
     digitalWrite(BIT1, HIGH);
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, HIGH);
@@ -195,6 +187,16 @@ void loop() {
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, LOW);
     caja = "";
+    lcd.setCursor(0, 0);
+    lcd.print("Paquetes: ");
+    lcd.setCursor(9, 0);
+    lcd.print(camion5Paquetes);
+    lcd.setCursor(0, 1);
+    lcd.print("Camion");
+    lcd.setCursor(9, 1);
+    lcd.print(5);
+    delay(1000);
+    lcd.clear();
   }
   else {
     delay(100);
@@ -202,53 +204,40 @@ void loop() {
     digitalWrite(BIT2, LOW);
     digitalWrite(BIT3, LOW);
   }
-
+  
+  lcd.clear();
   validarCamion();
 }
 void validarCamion() {
 
   if (camion1Paquetes == 500) {
     camion1Paquetes = 0;
-    pinMode(camion1Led, LOW);
+    digitalWrite(camion1Led, LOW);
     delay(10000);
-    pinMode(camion1Led, HIGH);
+    digitalWrite(camion1Led, HIGH);
   }
   if (camion2Paquetes == 500) {
     camion2Paquetes = 0;
-    pinMode(camion2Led, LOW);
+    digitalWrite(camion2Led, LOW);
     delay(10000);
-    pinMode(camion2Led, HIGH);
+    digitalWrite(camion2Led, HIGH);
   }
   if (camion3Paquetes == 150) {
     camion3Paquetes = 0;
-    pinMode(camion3Led, LOW);
+    digitalWrite(camion3Led, LOW);
     delay(10000);
-    pinMode(camion3Led, HIGH);
+    digitalWrite(camion3Led, HIGH);
   }
   if (camion4Paquetes == 150) {
     camion4Paquetes = 0;
-    pinMode(camion4Led, LOW);
+    digitalWrite(camion4Led, LOW);
     delay(10000);
-    pinMode(camion4Led, HIGH);
+    digitalWrite(camion4Led, HIGH);
   }
   if (camion5Paquetes == 100) {
     camion5Paquetes = 0;
-    pinMode(camion5Led, LOW);
+    digitalWrite(camion5Led, LOW);
     delay(10000);
-    pinMode(camion5Led, HIGH);
+    digitalWrite(camion5Led, HIGH);
   }
-}
-void imprimirLed() {
-
-  //OBTENEMOS LOS VALORES GLOBALES PESO Y CAMION
-
-  lcd.setCursor(0, 0);
-  lcd.print("Peso");
-  lcd.setCursor(5, 0);
-  lcd.print(peso);
-  lcd.setCursor(0, 1);
-  lcd.print("Camion");
-  lcd.setCursor(9, 1);
-  lcd.print(camion);
-
 }
